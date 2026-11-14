@@ -803,7 +803,11 @@ static const char *wallpaper_fit_names[] = { "Fill", "Fit", "Stretch", "Center",
 /* Optional background packs. Pack 0 is the shipped, flat frogui/ artwork;
  * additional packs live in frogui/theme-packs/<folder>/. Each pack contains
  * the same per-screen filenames (main.jpg, ps.jpg, settings.jpg, ...). */
-#define MAX_THEME_PACKS 32
+/* Keep the built-in/default slot plus room for the growing SD-card library.
+ * The old limit of 32 silently hid the last installed pack once users had
+ * accumulated enough themes, making settings.txt selections appear to work
+ * while the frontend continued using its fallback artwork. */
+#define MAX_THEME_PACKS 64
 static char theme_pack_files[MAX_THEME_PACKS][FONT_STR_MAX];
 static char theme_pack_disp[MAX_THEME_PACKS][FONT_STR_MAX];
 static int theme_pack_count = 1;
@@ -811,7 +815,9 @@ static int settings_theme_pack_idx = 0;
 
 /* System View icon packs are independent from background packs. Pack 0 keeps
  * frogui/system-icons; optional packs live in frogui/icon-packs/<folder>/. */
-#define MAX_ICON_PACKS 32
+/* Match the background-pack headroom so paired theme/icon libraries do not
+ * diverge as more packs are installed. */
+#define MAX_ICON_PACKS 64
 static char icon_pack_files[MAX_ICON_PACKS][FONT_STR_MAX];
 static char icon_pack_disp[MAX_ICON_PACKS][FONT_STR_MAX];
 static int icon_pack_count = 1;
